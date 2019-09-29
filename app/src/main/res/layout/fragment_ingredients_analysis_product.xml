@@ -1,0 +1,31 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ColorOfBackgroundActivity"
+    tools:context="maelumat.almuntaj.abdalfattah.altaeb.views.product.ingredients_analysis.IngredientsAnalysisProductFragment">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/detected_ingredients"
+        android:id="@+id/tv_detected_ingredients"
+        android:textSize="28sp"
+        android:padding="8dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        android:gravity="center"/>
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tv_detected_ingredients"
+        android:layout_margin="8dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/ColorOfBackgroundActivity"
+            android:id="@+id/ingredient_analysis_recycler_view"/>
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

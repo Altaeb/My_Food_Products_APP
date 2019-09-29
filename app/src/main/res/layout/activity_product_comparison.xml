@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/coordinator_layout_product"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/ColorOfBackgroundActivity"
+              android:orientation="vertical">
+
+    <include layout="@layout/toolbar" />
+    <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="100"
+    >
+        <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/product_comparison_rv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:scrollbars="horizontal"/>
+
+            <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginBottom="0dp"
+                    android:layout_toEndOf="@id/product_comparison_rv"
+                    android:layout_toRightOf="@id/product_comparison_rv">
+
+                <Button
+                        android:id="@+id/product_comparison_button"
+                        style="@style/BorderButton"
+                        android:layout_width="198dp"
+                        android:background="@android:color/white"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:text="@string/add_product" />
+            </RelativeLayout>
+        </RelativeLayout>
+    </HorizontalScrollView>
+    <include layout="@layout/navigation_bottom" />
+</LinearLayout>

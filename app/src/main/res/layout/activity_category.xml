@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/ColorOfBackgroundActivity"
+              android:fitsSystemWindows="true"
+              android:orientation="vertical"
+              tools:context="maelumat.almuntaj.abdalfattah.altaeb.views.category.activity.CategoryActivity">
+
+
+    <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+                                       android:id="@+id/toolbar"
+                                       android:layout_width="match_parent"
+                                       android:layout_height="wrap_content"
+                                       android:background="@color/colorOfActionBar"
+                                       android:elevation="4dp"
+                                       android:minHeight="?attr/actionBarSize"
+                                       android:theme="?attr/actionBarTheme"/>
+
+    <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/category_game_btn"
+            android:id="@+id/game_button"
+            android:textSize="@dimen/font_small"
+            android:textColor="@color/white"
+            android:background="@color/orange_400"/>
+
+    <fragment
+            android:id="@+id/fragment"
+            android:name="maelumat.almuntaj.abdalfattah.altaeb.views.category.fragment.CategoryListFragment"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/ColorOfBackgroundActivity"
+            android:layout_weight="100"/>
+    <include layout="@layout/navigation_bottom"/>
+</LinearLayout>
+

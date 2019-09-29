@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+        android:background="@color/ColorOfBackgroundActivity">
+
+    <PreferenceCategory android:title="@string/preference_header_general" android:summary="">
+
+        <ListPreference
+                android:defaultValue="ar"
+                android:dialogTitle="@string/preference_choose_language_dialog_title"
+                android:key="Locale.Helper.Selected.Language"
+                android:summary="@string/prefs_language_summary"
+                android:title="@string/prefs_language" />
+
+        <ListPreference
+            android:dialogTitle="@string/energy_pref_title"
+            android:key="energyUnitPreference"
+            android:summary="@string/choose_energy_unit"
+            android:title="@string/energy_pref_title" />
+
+        <ListPreference
+            android:dialogTitle="@string/volume_pref_title"
+            android:key="volumeUnitPreference"
+            android:summary="@string/choose_volume_unit"
+            android:title="@string/volume_pref_title" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/preference_header_about" android:summary="">
+
+        <Preference
+            android:key="contact_team"
+            android:summary="@string/contact_summary"
+            android:title="@string/contact" />
+
+        <Preference
+            android:key="FAQ"
+            android:summary="@string/FrequentlyAskedQuestions"
+            android:title="@string/FAQ" />
+        <Preference
+            android:key="RateUs"
+            android:summary="@string/Rate_Us_title"
+            android:title="@string/Rate_Us" />
+
+        <Preference
+            android:key="Terms"
+            android:summary="@string/TermsOfUse"
+            android:title="@string/Terms" />
+
+        <Preference
+            android:key="Version"
+            android:title="@string/version" />
+
+    </PreferenceCategory>
+</PreferenceScreen>

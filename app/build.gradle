@@ -1,0 +1,281 @@
+apply plugin: 'com.android.application'
+apply plugin: 'de.timfreiheit.resourceplaceholders.plugin'
+
+def obtainTestBuildType() {
+    //to activate  screenshots buildType in IDE; uncomment next line and comment other
+    //otherwise the folder androidTestScreenshots is not recognized as a test folder.
+//    def result = "screenshots"
+    def result = "debug"
+    if (project.hasProperty("testBuildType")) {
+        result = project.getProperties().get("testBuildType")
+    }
+
+    result
+}
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion '29.0.0'
+
+
+    testBuildType obtainTestBuildType()
+
+
+    defaultConfig {
+        applicationId "maelumat.almuntaj.abdalfattah.altaeb"
+        minSdkVersion 16
+        targetSdkVersion 29
+        versionCode 101
+        versionName "1.0.1"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+        ndk.abiFilters 'armeabi-v7a','arm64-v8a','x86','x86_64'
+    }
+
+    buildTypes {
+        release {
+            crunchPngs true
+        }
+        screenshots{
+            initWith debug
+        }
+
+
+    }
+
+    dataBinding {
+        enabled true
+    }
+
+    flavorDimensions "versionCode"
+    productFlavors {
+        off {
+            applicationId "maelumat.almuntaj.abdalfattah.food"
+            resValue "string", "app_name", "منتجات الغذائية "
+            buildConfigField 'String', 'HOST', '"https://ssl-api.openfoodfacts.org"'
+            buildConfigField 'String', 'OFOTHERLINKAPP', '"maelumat.almuntaj.abdalfattah.beauty"'
+            buildConfigField 'String', 'OFWEBSITE', '"https://world.openfoodfacts.org/"'
+            buildConfigField 'String', 'WIKIDATA', '"https://www.wikidata.org/wiki/Special:EntityData/"'
+            buildConfigField 'String', 'STATICURL', '"https://static.openfoodfacts.org"'
+
+        }
+
+        obf {
+            applicationId "maelumat.almuntaj.abdalfattah.beauty"
+            resValue "string", "app_name", "منتجات مواد التجميل"
+            buildConfigField 'String', 'HOST', '"https://ssl-api.openbeautyfacts.org"'
+            buildConfigField 'String', 'OFOTHERLINKAPP', '"maelumat.almuntaj.abdalfattah.food"'
+            buildConfigField 'String', 'OFWEBSITE', '"https://world.openbeautyfacts.org/"'
+            buildConfigField 'String', 'WIKIDATA', '"https://www.wikidata.org/wiki/Special:EntityData/"'
+            buildConfigField 'String', 'STATICURL', '"https://static.openbeautyfacts.org"'
+        }
+        opff {
+            applicationId "maelumat.almuntaj.abdalfattah.pet"
+            resValue "string", "app_name", "منتجات أغذية الحيوانات الأليفة"
+            buildConfigField 'String', 'HOST', '"https://ssl-api.openpetfoodfacts.org"'
+            buildConfigField 'String', 'OFOTHERLINKAPP', '"maelumat.almuntaj.abdalfattah.food"'
+            buildConfigField 'String', 'OFWEBSITE', '"https://world.openpetfoodfacts.org/"'
+            buildConfigField 'String', 'WIKIDATA', '"https://www.wikidata.org/wiki/Special:EntityData/"'
+            buildConfigField 'String', 'STATICURL', '"https://static.openpetfoodfacts.org"'
+        }
+        opf {
+            applicationId "org.openproductsfacts.products"
+            resValue "string", "app_name", "منتجات أخري"
+            buildConfigField 'String', 'HOST', '"https://ssl-api.openproductsfacts.org"'
+            buildConfigField 'String', 'OFOTHERLINKAPP', '"maelumat.almuntaj.abdalfattah.food"'
+            buildConfigField 'String', 'OFWEBSITE', '"https://world.openproductsfacts.org/"'
+            buildConfigField 'String', 'WIKIDATA', '"https://www.wikidata.org/wiki/Special:EntityData/"'
+            buildConfigField 'String', 'STATICURL', '"https://static.openproductsfacts.org"'
+        }
+    }
+
+
+    dexOptions {
+        preDexLibraries = false
+        javaMaxHeapSize "4g"
+    }
+
+    defaultConfig {
+        multiDexEnabled true
+        // jackOptions.enabled = true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    lintOptions {
+        abortOnError false
+        disable 'MissingTranslation'
+    }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES.txt'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/dependencies.txt'
+        exclude 'META-INF/LGPL2.1'
+    }
+
+    testOptions {
+        // avoid "Method ... not mocked."
+        unitTests.returnDefaultValues = true
+        execution 'ANDROIDX_TEST_ORCHESTRATOR'
+    }
+}
+
+
+
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+        maven { url "https://jitpack.io" }
+    }
+}
+
+apply plugin: 'org.greenrobot.greendao'
+
+greendao {
+    schemaVersion 13
+}
+android {
+    // Other settings
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+dependencies {
+
+    //Android
+    implementation "androidx.browser:browser:$rootProject.supportLibraryVersion"
+    implementation "androidx.appcompat:appcompat:$rootProject.supportLibraryVersion"
+    implementation "androidx.recyclerview:recyclerview:$rootProject.supportLibraryVersion"
+    implementation "androidx.cardview:cardview:$rootProject.supportLibraryVersion"
+    implementation "androidx.legacy:legacy-support-v4:$rootProject.supportLibraryVersion"
+    implementation "androidx.legacy:legacy-preference-v14:$rootProject.supportLibraryVersion"
+    implementation "com.google.android.material:material:$rootProject.supportLibraryVersion"
+    implementation "androidx.annotation:annotation:$rootProject.supportLibraryVersion"
+    implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintLayout"
+    implementation "androidx.multidex:multidex:$rootProject.multidexVersion"
+    implementation 'com.github.clans:fab:1.6.4'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+
+
+
+    //DI
+    implementation "androidx.legacy:legacy-support-v4:$rootProject.supportLibraryVersion"
+    annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
+    implementation "com.google.dagger:dagger:$rootProject.daggerVersion"
+    compileOnly "javax.annotation:jsr250-api:$rootProject.jsr250api"
+
+    //Rx
+    implementation "io.reactivex.rxjava2:rxjava:$rootProject.rxVersion"
+    implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxAndroidVersion"
+
+    //Networking
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-jackson:$rootProject.retrofitVersion"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$rootProject.retrofitVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.okhttpVersion"
+
+    //scheduling jobs
+    implementation "com.firebase:firebase-jobdispatcher:$rootProject.jobDispatcher"
+    implementation "commons-lang:commons-lang:$rootProject.commonsLang"
+    implementation "org.apache.commons:commons-csv:$rootProject.commonsCsv"
+
+    //Serialization/Deserialization
+    implementation "com.fasterxml.jackson.core:jackson-core:$rootProject.jacksonVersion"
+    implementation "com.fasterxml.jackson.core:jackson-databind:$rootProject.jacksonVersion"
+    implementation "com.fasterxml.jackson.core:jackson-annotations:$rootProject.jacksonVersion"
+
+    //Database
+    implementation "org.greenrobot:greendao:$rootProject.greenDaoVersion"
+
+    //Image Loading
+    implementation "com.squareup.picasso:picasso:$rootProject.picassoVersion"
+
+    //Image from gallery or camera
+    implementation "com.github.jkwiecien:EasyImage:$rootProject.easyImageVersion"
+
+    //Binding
+    implementation "com.jakewharton:butterknife:$rootProject.butterknifeVersion"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.butterknifeVersion"
+
+    //Barcode and QR Scanner
+    implementation("com.journeyapps:zxing-android-embedded:$rootProject.journeyappsZxingScannerVersion") {
+        transitive = false
+    }
+    implementation "com.google.zxing:core:$rootProject.zxingCoreVersion"
+
+    //Apache
+    implementation "commons-validator:commons-validator:$rootProject.apacheValidatorVersion"
+
+    //UI Component : Custom Toast
+    implementation "net.steamcrafted:load-toast:$rootProject.loadToastVersion"
+
+    //UI Component : ImageView with Zooming
+    implementation "com.github.chrisbanes:PhotoView:$rootProject.zoomingImgVersion"
+
+    //UI Component : Material Dialog
+    implementation("com.afollestad.material-dialogs:core:$rootProject.materialDialogVersion") {
+        transitive = true
+    }
+
+    //UI Component : Material Drawer
+    implementation("com.mikepenz:materialdrawer:$rootProject.materialDrawer") {
+        transitive = true
+    }
+
+    //UI Component : Adapters
+
+    //DO NOT UPDATE : RecyclerViewCacheUtil removed, needs rework
+    implementation "com.mikepenz:fastadapter-commons:$rootProject.fastAdapterCommons"
+    implementation "com.squareup.retrofit2:converter-scalars:$rootProject.converterScalars"
+
+    //UI Component : Font Icons
+    implementation "com.mikepenz:iconics-core:$rootProject.fontIconCoreVersion"
+    implementation "com.mikepenz:google-material-typeface:$rootProject.googleMaterialFontVersion"
+    implementation("com.theartofdev.edmodo:android-image-cropper:$rootProject.imageCropper") {
+        exclude group: 'com.android.support', module: 'appcompat-v7'
+    }
+
+    //UI Component : Chips Input
+    implementation "com.hootsuite.android:nachos:$rootProject.nachos"
+
+
+    //Testing
+    androidTestUtil "androidx.test:orchestrator:$rootProject.orchestrator"
+    testImplementation "junit:junit:$rootProject.jUnitVersion"
+    testImplementation "org.mockito:mockito-core:$rootProject.mockitoVersion"
+    testImplementation "net.javacrumbs.json-unit:json-unit-fluent:$rootProject.jsonUnitVersion"
+
+    // Required for instrumented tests
+    androidTestImplementation "androidx.test:runner:$rootProject.testRunnerVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espressoVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-intents:$rootProject.espressoVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-web:$rootProject.espressoVersion"
+    androidTestImplementation("androidx.test.espresso:espresso-contrib:$rootProject.espressoContribVersion") {
+        exclude group: 'com.android.support', module: 'appcompat-v7'
+        exclude group: 'com.android.support', module: 'support-v4'
+        exclude group: 'com.android.support', module: 'design'
+        exclude module: 'recyclerview-v7'
+    }
+    androidTestImplementation "com.jraska:falcon:$rootProject.testFalconVersion"
+    androidTestImplementation "tools.fastlane:screengrab:$rootProject.testscreengrabVersion"
+    resourcePlaceholders {
+        files = ['xml/shortcuts.xml']
+    }
+}
